@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Dynamic Keystroke Auth</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        
+        {% if message %}
+            <p style="color: red; font-weight: bold;">{{ message }}</p>
+        {% endif %}
+        
+        <form id="loginForm" action="/login" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            
+            <input type="password" id="password" name="password" placeholder="Password" autocomplete="off" required>
+            
+            <input type="hidden" id="keystrokesData" name="keystrokes_data">
+            
+            <button type="submit">Login</button>
+        </form>
+        
+        <p style="margin-top: 15px;">Don't have an account? <a href="/register">Register here</a></p>
+    </div>
+
+    <script src="/static/js/verify.js"></script>
+</body>
+</html>

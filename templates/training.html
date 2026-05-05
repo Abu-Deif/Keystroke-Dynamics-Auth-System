@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keystroke Data Collection</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Training Phase: Collect Keystrokes</h2>
+        <p>Please type the password <b>"pass"</b> 30 times to train your unique typing pattern.</p>
+        
+        <form id="collectForm">
+            <input type="text" id="password" placeholder="Type 'pass' here" autocomplete="off" required>
+        </form>
+
+        <h3 id="attemptCounter">Attempt: 0 / 30</h3>
+        <div id="message"></div>
+        <form action="/train_model" method="POST" id="goTraining" style="display:none; margin-top:20px;">
+            <button type="button" id="trainButton" class="train-btn">Train AI Model Now</button>
+        </form>
+    </div>
+
+    <div id="trainingOverlay" class="loading-overlay" aria-hidden="true">
+        <div class="overlay-panel">
+            <div class="spinner" aria-hidden="true"></div>
+            <div class="overlay-title">AI Model Training</div>
+            <div id="overlayStatus" class="overlay-status">AI Engine: Extracting Dwell Time & Flight Time patterns...</div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/collect.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/training_overlay.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SOC Dashboard - Keystroke Auth</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>🛡️ SOC Security Dashboard</h1>
+        <p>Real-time monitoring of authentication attempts and AI anomaly scores.</p>
+        
+    <div class="dashboard-controls">
+    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="🔍 Search by IP, Username, or Date...">
+    
+        <select id="statusFilter" onchange="filterTable()">
+        <option value="">All Statuses</option>
+        <option value="Success">Success</option>
+        <option value="Blocked">Blocked: Anomaly Detected</option>
+        </select>
+    </div>
+
+        <table class="soc-table">
+            <thead>
+                <tr>
+                    <th>Log ID</th>
+                    <th>User</th>
+                    <th>Status</th>
+                    <th>SVM Match %</th>
+                    <th>ISO Match %</th>
+                    <th>Timestamp</th>
+                    <th>IP Address</th>
+                    <th>User Agent</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td>{{ log[0] }}</td>
+                    <td>{{ log[1] }}</td>
+                    <td class="{% if 'Blocked' in log[2] %}status-blocked{% else %}status-success{% endif %}">
+                        {{ log[2] }}
+                    </td>
+                    <td>{{ "%.1f"|format(log[3]) }}%</td>
+                    <td>{{ "%.1f"|format(log[4]) }}%</td>
+                    <td>{{ log[5] }}</td>
+                    <td>{{ log[6] }}</td>
+                    <td class="user-agent" title="{{ log[7] }}" onclick="alert('Full Device Info: \n' + this.title)" style="cursor: pointer;">
+                        {{ log[7] }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8" class="no-data">No authentication logs found yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class="back-link">
+            <a href="/">Back to Login</a>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/dashboard_utils.js') }}"></script>
+</body>
+</html>

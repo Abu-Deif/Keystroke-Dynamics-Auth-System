@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Keystroke System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Create New Account</h2>
+        <p>Register to train your typing pattern.</p>
+        
+                <form action="/register" method="POST">
+            <input type="text" name="username" placeholder="Enter Username" required>
+            <input type="password" name="password" placeholder="Enter Password" required>
+            <button type="submit">Register</button>
+        </form>
+        
+        {% if message %}
+            <p style="color:red; font-weight:bold;">{{ message }}</p>
+        {% endif %}
+
+        <p>Already have an account? <a href="/">Login here</a></p>
+    </div>
+</body>
+</html>
